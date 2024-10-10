@@ -15,14 +15,10 @@ response = response.json()
 
 # 或者说这个还可以抽离一个函数
 # 这个时候，我们就提高了代码的复用
-def get_User_Agent(response: json, fieldNameOne: str, fieldNameTwo: str, *args, **kwargs) -> str:
-    if response:
-        if response[fieldNameOne]:
-            if response[fieldNameOne][fieldNameTwo]:
-                return response[fieldNameOne][fieldNameTwo]
-            return f" { fieldNameTwo } 不存在"
-        return f" { fieldNameOne } 不存在"
-    return f" { response } 不存在"
+def get_User_Agent(response: dict, fieldNameOne: str, fieldNameTwo: str, *args, **kwargs) -> str:
+    if response and fieldNameOne in response and fieldNameTwo in response[fieldNameOne]:
+        return response[fieldNameOne][fieldNameTwo]
+    return f"{'不存在' if not response else '不合法'}字段: {fieldNameTwo if fieldNameOne in response else fieldNameOne}"
 
 
 print(get_User_Agent(response, "headers", "User-Agent"))
