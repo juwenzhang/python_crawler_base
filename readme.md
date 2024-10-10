@@ -11,6 +11,6 @@
   * 前后端交互重要知识点: 会话维持 `session` `cookie`
 
 
-* 第二部: 了解 python jsonpath module 的使用
+* 第二步: 了解 python jsonpath module 的使用
   * 理解前端的异步加载和同步加载
   * 了解开发一个项目的总的开发流程
