@@ -34,3 +34,29 @@
     * 一般就是返回的是我们的 `json` 格式的数据，也是当前前后端交互常见的一种数据格式
   * 一般爬取网页的时候，不是 `html文本` ， 就是 `json`
   * `https://www.json.cn/` 实现判断是否是 json 数据，在线解析 json 数据的网站
+
+
+* `jsonpath` 是第三方模块
+  * 使用之前首先需要的是:  `pip install jsonpath`
+  * 然后实现导入模块 `from josnpath import jsonpath`
+
+
+* `jsonpath` 的基本使用
+  * `$` 表示的是我们的根节点， `..` 表示的是忽略任意的层级
+  * 使用的而基本规则: `jsonpath(目标, 语法)`
+
+
+* 我们实现将多个列表中的数据实现对应存储的时候
+  * 可以使用的方法是: 
+  * `for list01, list02, list03 in zip(list1, list2, list3):`
+
+
+* 最后我们就需要考虑最后的保存数据
+  * 可以直接保存到我们的数据库中，pymysql 模块
+  * 也是可以直接保存在我们的 excel 表中: openpyxl: `pip install openpyxl` 
+  * [openpyxl的基本使用](https://www.bilibili.com/video/BV1Bv4y1K74A?vd_source=bb20c062393ff7c3113f7a3085b1acb1&p=2&spm_id_from=333.788.player.switch)
+  
+
+* 然后进展到最后，我们需要注意的就是页面的翻页问题，来实现爬取所有的数据
+  * 同时在发送请求的时候，我们是需要设置递归深度，来防止因为网络波动导致的请求失败
+  * 通过 sys 模块来实现设置递归深度
