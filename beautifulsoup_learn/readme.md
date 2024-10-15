@@ -24,3 +24,13 @@
   * `find_all(tagname, attrs, recursive, text, **kwargs)`
   * 可以根据我们的`标签名， 属性， 内容`实现查找文档
   * 但是需要注意的是，这个方法实现查询到的结果是一个数组
+
+
+### CSS selector
+* 通过CSS选择器实现查找内容
+  * 就是使用的是我们的 `soup.select(selectorName)`
+  * 最后实现返回的是我们的列表 list
+  * CSS 选择器
+    * 标签选择器 ： 直接书写标签名就行了
+    * 类选择器  ： .类名
+    * id选择器  ： #id选择器名
