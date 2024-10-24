@@ -114,10 +114,8 @@ class Spider(object):
                "values (%s, %s, %s, %s)")
 
         try:
-            for item in data:
-                data = (item[0], item[1], item[2], item[3])   # 后面有时间必须优化这一步
-                self.cursor.execute(sql, data)  # 执行语句， 通过游标来实现执行语句
-                self.conn.commit()  # 提交事务
+            self.cursor.executemany(sql, data)  # 执行语句， 通过游标来实现执行语句
+            self.conn.commit()  # 提交事务
             print("数据存储成功")
 
         except Exception as e:
