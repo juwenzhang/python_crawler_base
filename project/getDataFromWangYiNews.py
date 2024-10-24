@@ -1,6 +1,4 @@
 import sys
-from pkgutil import get_data
-
 import requests
 
 
