@@ -1,3 +1,4 @@
+import re
 import sys
 import requests
 
@@ -19,20 +20,17 @@ class GetDataFromWangYi(object):
         析构函数的书写
         :return:
         """
-        print("本次爬取任务完毕...")
+        print("\n\n本次爬取任务完毕...")
 
 
-    def remove_char(self, content, del_char, replace_char, *args, **kwargs) -> str:
+    def remove_char(self, content):
         """
         用来实现对返回数据的字符串实现处理的函数
         :param content:
-        :param del_char:
-        :param replace_char:
-        :param args:
-        :param kwargs:
-        :return: content.replace(del_char, replace_char)
+        :return: re.search('data_callback\((.*?)\)', content, re.S)
         """
-        return content.replace(del_char, replace_char)
+        # return content.replace(del_char, replace_char)
+        return re.search('data_callback\((.*?)\)', content, re.S).group(1)
 
 
     def get_data(self, *args, **kwargs):
@@ -57,9 +55,8 @@ class GetDataFromWangYi(object):
         :param kwargs:
         :return:
         """
-        first_data = self.remove_char(data, 'data_callback(', "")
-        finally_data = self.remove_char(first_data, ')', "")
-        print(finally_data)
+        result = self.remove_char(data)
+        print(result)
 
 
     def save_data(self, *args, **kwargs):
