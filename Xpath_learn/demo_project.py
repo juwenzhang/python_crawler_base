@@ -1,6 +1,7 @@
 import json
 import requests
 from lxml import etree
+from pymysql import connect
 
 class Spider(object):
     # 先实现书写我们的构造函数 (初始化方法: 就是我们的一个类实现的时候，初始化方法里面的内容自动完成)
@@ -14,6 +15,18 @@ class Spider(object):
                           "(KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
             "upgrade-insecure-requests": "1",
         }  # 实现的是爬虫的伪装(实例属性)
+
+        # 连接数据库的操作
+        self.conn = connect(
+            user='root',
+            password='451674',
+            host='127.0.0.1',
+            database='python_crawler',
+            port=3306,
+            charset='utf8mb4'
+        )
+        # 通过我们的连接对象来实现获取游标对象
+        self.cursor = self.conn.cursor()
 
 
     def get_data(self, url, *args, **kwargs):
@@ -31,19 +44,18 @@ class Spider(object):
         """
         解析数据
         :param xml_doc:
-        :return:
+        :return: title_docker
         """
         title_links = xml_doc.xpath('//ul[@class="list2"]/li/h3/a/@href')  # 实现获取的是链接 title_links
         titles = xml_doc.xpath('//ul[@class="list2"]/li/h3/a/text()')  # 实现获取的是我们的标题 titles
         title_discs = xml_doc.xpath('//ul[@class="list2"]/li/p/text()')  # 实现获取的文章描述信息 title_descs
         # print(len(titles), len(title_links))  # 25 25
 
+        title_docker = []
         for title, title_link, title_desc in zip(titles, title_links, title_discs):
-            print(title)
-            print(title_link)
-            print(title_desc)
-            self.parse_detail_data(title_link)
-            print("===================================")
+            title_content = self.parse_detail_data(title_link)
+            title_docker.append([title, title_link, title_desc, title_content])
+        return title_docker
 
 
     def remove_char(self, sep, content, remove_char, replace_char, *args, **kwargs):
@@ -66,23 +78,51 @@ class Spider(object):
         """
         解析详情页数据
         :param title_link:
-        :return:
+        :return: content
         """
         xml_doc = self.get_data(title_link)
+        # 实现匹配数据
         contents_base = xml_doc.xpath('//div[@class="con"]/div//text()')
-        content = self.remove_char(" ", contents_base, "s3(); ", " ")
-        print(json.loads(content))
+        # 初步解析数据
+        content = self.remove_char(" ", contents_base, "s3(); ", "")
+        # 进一步解析数据
+        content = self.remove_char("", json.loads(content),
+                                   "【www.hnbitebi.com--情话】 ", "")
+        # 需要反序列化取数据
+        return content
 
 
-    def save_data(self, *args, **kwargs):
-        """保存数据"""
-        pass
+    def save_data(self, data: list, *args, **kwargs):
+        """
+        保存数据
+        :param data:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        sql = ("insert into article_data "
+               "(title, title_link, title_desc, title_content) "
+               "values (%s, %s, %s, %s)")
+
+        try:
+            for item in data:
+                data = (item[0], item[1], item[2], item[3])
+                self.cursor.execute(sql, data)  # 执行语句
+                self.conn.commit()  # 提交事务
+            print("数据存储成功")
+
+        except Exception as e:
+            print(f'error: {e}')
+            self.conn.rollback()  # 实现数据库的回滚
+        finally:
+            self.conn.close()  # 最后关闭数据库
 
 
     def run(self, *args, **kwargs):
         """启动项目的入口"""
         xml_data = self.get_data(self.url)
-        self.parse_data(xml_data)
+        data = self.parse_data(xml_data)
+        self.save_data(data)
 
 
 if __name__ == "__main__":
