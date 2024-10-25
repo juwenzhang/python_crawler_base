@@ -2,6 +2,8 @@ import json
 import re
 import sys
 import requests
+from jsonpath import jsonpath
+from pymysql import connect
 
 
 class GetDataFromWangYi(object):
@@ -18,6 +20,16 @@ class GetDataFromWangYi(object):
                           ' x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/129.0.0.0 Safari/537.36',
         }
+
+        self.conn = connect(
+            user='root',
+            password='451674',
+            database='python_crawler',
+            host='localhost',
+            charset='utf8mb4',
+            port=3306
+        )
+        self.cursor = self.conn.cursor()
 
 
     def __del__(self, *args, **kwargs):
@@ -73,33 +85,49 @@ class GetDataFromWangYi(object):
         result_str = self.remove_char(data)
         result_json = json.loads(result_str)
 
-        titles = []
-        tlinks = []
-        sources = []
         try:
-            for item in result_json:
-                titles.append(item["title"])
-                tlinks.append(item["tlink"])
-                sources.append(item["source"])
+            titles = jsonpath(result_json, "$..title")
+            tlinks = jsonpath(result_json, "$..tlink")
+            sources = jsonpath(result_json, "$..source")
+            data_docker = []
             for title, tlink, source in zip(titles, tlinks, sources):
-                print(title)
-                print(tlink)
-                print(source)
-                print("==============================")
+                data_docker.append([title, tlink, source])
+            self.save_data(data_docker)
+
         except Exception as e:
             print(f"error: {e}")
             sys.setrecursionlimit(10)
             self.parse_data(data)
 
 
-    def save_data(self, *args, **kwargs):
-        """保存数据"""
-        pass
+    def save_data(self, data, *args, **kwargs):
+        """
+        保存数据
+        :param data: 需要实现存储的数据
+        :param args: 可选参数
+        :param kwargs: 可选参数
+        :return: None
+        """
+        sql = ("insert into getWanyiData "
+               "(title, tlink, source) "
+               "values (%s, %s, %s)")
+
+        try:
+            self.cursor.executemany(sql, data)
+            self.conn.commit()
+            print("存储数据成功...")
+        except Exception as e:
+            print(f"error: {e}")
+            self.conn.rollback()
+            sys.setrecursionlimit(10)
+            self.save_data(data)
 
 
     def run(self, *args, **kwargs):
         """启动程序"""
         self.parse_data(self.get_data())
+        self.cursor.close()
+        self.conn.close()
 
 
 if __name__ == "__main__":
