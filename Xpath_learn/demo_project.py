@@ -9,6 +9,9 @@ class Spider(object):
     def __init__(self, *args, **kwargs):
         """
         构造函数(初始化方法)
+        :param args: 可选参数
+        :param kwargs: 可选参数
+        :returns: None
         """
         self.headers = {
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -32,7 +35,7 @@ class Spider(object):
     def get_data(self, url, *args, **kwargs):
         """
         获取数据
-        :param url:
+        :param url: 发送请求的网址
         :return: xml_doc
         """
         try:
@@ -46,7 +49,7 @@ class Spider(object):
     def parse_data(self, xml_doc, *args, **kwargs):
         """
         解析数据
-        :param xml_doc:
+        :param xml_doc: 需要初步解析的 xml 数据
         :return: title_docker
         """
         try:
@@ -67,13 +70,13 @@ class Spider(object):
     def remove_char(self, sep, content, remove_char, replace_char, *args, **kwargs):
         """
         用来实现清除不需要的字符,同时转化为 json 格式的数据
-        :param sep:
-        :param content:
-        :param remove_char:
-        :param replace_char:
-        :param args:
-        :param kwargs:
-        :return:
+        :param sep: 连接符
+        :param content: 处理内容
+        :param remove_char: 移除字符串
+        :param replace_char: 替换字符串
+        :param args: 可选参数
+        :param kwargs: 可选参数
+        :return: None
         """
         content_str =  sep.join(map(str, content)).replace(remove_char, replace_char)
         content_json = json.dumps(content_str)
@@ -83,7 +86,9 @@ class Spider(object):
     def parse_detail_data(self, title_link, *args, **kwargs):
         """
         解析详情页数据
-        :param title_link:
+        :param title_link: 进行详细解析的链接
+        :param args: 可选参数
+        :param kwargs: 可选参数
         :return: content
         """
         try:
@@ -104,10 +109,10 @@ class Spider(object):
     def save_data(self, data: list, *args, **kwargs):
         """
         保存数据
-        :param data:
-        :param args:
-        :param kwargs:
-        :return:
+        :param data: 需要保存的数据
+        :param args: 可选参数
+        :param kwargs: 可选参数
+        :return: None
         """
         sql = ("insert into article_data "
                "(title, title_link, title_desc, title_content) "
@@ -129,9 +134,9 @@ class Spider(object):
     def run(self, *args, **kwargs):
         """
         启动项目的入口
-        :param args:
-        :param kwargs:
-        :return:
+        :param args: 可选参数
+        :param kwargs: 可选参数
+        :return: None
         """
         for page in range(1, 44):  # [1, 44)
             self.url = "http://hnbitebi.com/hlist-7-{}.html".format(page)  # 我们实现发送请求的网址(实例属性)
