@@ -46,3 +46,19 @@
   * 客户端先把请求发给 fiddler,然后把请求发送给服务端
   * 服务端实现响应数据也是先把响应给 fiddler,然后给客户端
   * 想用就用，不用就不用，没强制要求（个人感觉不好用）
+
+
+
+| python_module |                             desc                             |                          learn_link                          |
+| :-----------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|   requests    | 这个模块就是实现的是我们对网页发送请求的模块，爬虫的首先的任务就是先发送请求 | https://blog.csdn.net/maiya_yayaya/article/details/131608297 |
+| beautifulsoup | 这个模块就是实现的是将我们请求回来的 HTML 数据实现解析的一个模块，主要是用来实现的是解析数据使用的 | https://blog.csdn.net/m0_62283350/article/details/139795111  |
+|   jsonpath    | 这个模块就是实现的是将我们的请求回来 Json 数据进行解析的一个模块 | https://blog.csdn.net/powerbiubiu/article/details/137792234  |
+|     lxml      | 这个模块既是我们的 beautifulsoup 的解析的解析器，同时话可以实现解析我们的 XML 数据 | https://blog.csdn.net/2401_83617404/article/details/141726851 |
+|      re       | 这个模块就是实现的是我们的每种语言中都具有的一种进行匹配数据的语言规则，正则表达式 | https://blog.csdn.net/weixin_40134371/article/details/136187262 |
+|    pymysql    | 这个模块就是实现的是讲我们的数据进行保存到数据库中的一个模块，就是一些数据库的操作 | https://blog.csdn.net/Gherbirthday0916/article/details/123524627 |
+|      sys      | 这个模块就是实现的是对我们的操作系统进行的一些操作模式，在爬虫中我们是可以通过这个模块来进行设置我们的递归深度的 | https://blog.csdn.net/qq_56262770/article/details/140957405  |
+|     json      | 这个模块就是实现的是将 python 中的数据实现 和 json 数据之间的转换的模块，在爬虫也是十分常见以及使用的 | https://blog.csdn.net/weixin_44799217/article/details/112256220 |
+|     time      | 这个模块就是实现的是我们的关于操作时间的模块，我们是可以通过这个模块来实现判断我们的爬取数据的快慢的，然后实现优化代码 | https://blog.csdn.net/weixin_54546190/article/details/120897108 |
+|   openpyxl    | 这个模块可以实现的是将我们的数据实现保存到我们的 excel 表中  | https://blog.csdn.net/weixin_41238626/article/details/140671730 |
+
