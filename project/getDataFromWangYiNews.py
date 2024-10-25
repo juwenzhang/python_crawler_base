@@ -124,7 +124,12 @@ class GetDataFromWangYi(object):
 
 
     def run(self, *args, **kwargs):
-        """启动程序"""
+        """
+        保存注释
+        :param args: 可选参数
+        :param kwargs: 可选参数
+        :return:
+        """
         self.parse_data(self.get_data())
         self.cursor.close()
         self.conn.close()
