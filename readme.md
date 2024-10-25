@@ -41,13 +41,24 @@
 
 ![image01](/images/image01.png)
 * 没有使用 fiddler 的时候，
+  
   * 直接是 客户端给服务端发送请求，然后服务端给客户端响应
 * 使用了 fiddler 之后
   * 客户端先把请求发给 fiddler,然后把请求发送给服务端
+  
   * 服务端实现响应数据也是先把响应给 fiddler,然后给客户端
+  
   * 想用就用，不用就不用，没强制要求（个人感觉不好用）
+  
+    
+
+***
+
+***
 
 
+
+# 爬虫所需模块使用
 
 | python_module |                             desc                             |                          learn_link                          |
 | :-----------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -61,4 +72,22 @@
 |     json      | 这个模块就是实现的是将 python 中的数据实现 和 json 数据之间的转换的模块，在爬虫也是十分常见以及使用的 | https://blog.csdn.net/weixin_44799217/article/details/112256220 |
 |     time      | 这个模块就是实现的是我们的关于操作时间的模块，我们是可以通过这个模块来实现判断我们的爬取数据的快慢的，然后实现优化代码 | https://blog.csdn.net/weixin_54546190/article/details/120897108 |
 |   openpyxl    | 这个模块可以实现的是将我们的数据实现保存到我们的 excel 表中  | https://blog.csdn.net/weixin_41238626/article/details/140671730 |
+
+
+
+***
+
+***
+
+
+
+# 文件目录分类
+
+|       DirName       |                             Desc                             |                             Link                             |
+| :-----------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| beautifulsoup_learn |        用来记录的是关于 beautifulsoup 模块的基本使用         | https://github.com/juwenzhang/python_crawler_base/tree/python_crawler_base/beautifulsoup_learn |
+|   requeats_learn    |         用来实现记录的是关于 requests 模块的基本使用         | https://github.com/juwenzhang/python_crawler_base/tree/python_crawler_base/requests_learn |
+|   jsonpath_learn    |         用来实现记录的是关于 jsonpath 模块的基本使用         | https://github.com/juwenzhang/python_crawler_base/tree/python_crawler_base/jsonpath_learn |
+|     Xpath_learn     |    用来实现的是记录关于使用 lxml 解析 XML 数据的基本使用     | https://github.com/juwenzhang/python_crawler_base/tree/python_crawler_base/Xpath_learn |
+|    demo_project     | 用来实现的是记录关于写一些爬取小的网站的数据的脚本项目的目录 | https://github.com/juwenzhang/python_crawler_base/tree/python_crawler_base/demo_project |
 
