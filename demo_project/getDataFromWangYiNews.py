@@ -56,15 +56,16 @@ class GetDataFromWangYi(object):
         return re.search('data_callback\((.*)\)', content, re.S).group(1)
 
 
-    def get_data(self, *args, **kwargs):
+    def get_data(self, url, *args, **kwargs):
         """
         获取数据
+        :param url: 实现传入的参数
         :param args: 可选参数
         :param kwargs: 可选参数
         :return: response
         """
         try:
-            response = requests.get(self.url, headers=self.headers).text
+            response = requests.get(url, headers=self.headers).text
             return response
 
         except Exception as e:
@@ -130,7 +131,16 @@ class GetDataFromWangYi(object):
         :param kwargs: 可选参数
         :return:
         """
-        self.parse_data(self.get_data())
+        for index in range(1, 6):
+            print(f"正在爬取第{index}页")
+            if index == 1:
+                # 通过我们的基本的验证，第一页的网页实现的时候，我们的翻页的原则是不可以实现的，所以说需要单独实现请求
+                data = self.get_data(self.url)
+                self.parse_data(data)
+            else:
+                page_url = ("https://news.163.com/special/cm_"
+                            "yaowen20200213_0{}/?callback=data_callback").format(index)
+                self.parse_data(self.get_data(page_url))
         self.cursor.close()
         self.conn.close()
 
