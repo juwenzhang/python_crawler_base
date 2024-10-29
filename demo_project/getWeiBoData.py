@@ -1,7 +1,7 @@
 import requests
 from jsonpath import jsonpath
 
-
+# 这个的规则还没有发现，过几天再来
 class GetWeiBoComments(object):
     def __init__(self, *args, **kwargs):
         """

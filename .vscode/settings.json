@@ -1,0 +1,10 @@
+{
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+  "rust-analyzer.debug.engineSettings": {
+
+  },
+  "cmake.configureSettings": {
+
+  },
+  "liveServer.settings.ChromeDebuggingAttachment": false,
+}
