@@ -14,30 +14,31 @@ class GetWeiBoComments(object):
         self.header = {
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                           "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
-            "cookie": "XSRF-TOKEN=BT1IN_ZYnAX5cV3uikTcjNt9; PC_TOKEN=2a3ebefad0; _s_"
-                      "tentry=passport.weibo.com; appkey=; Apache=181887480269.68903."
-                      "1730143572653; SINAGLOBAL=181887480269.68903.1730143572653; UL"
-                      "V=1730143572655:1:1:1:181887480269.68903.1730143572653:; SCF=A"
-                      "scUSQaLBzDj6RSMLIuUweC-pPmALjHIq0_mRuAJlXOh7PQyfJ-FigH0H1RsZct"
-                      "HvkVunQH1sDGno3b7PkhbR04.; SUB=_2A25KG5X8DeRhGeFG7lIW8i7JyT2IH"
-                      "XVpWJc0rDV8PUNbmtAbLWrRkW9NeU1ZCB89nOP4Amc9O1qBcTKACa9ctFtj; SU"
-                      "BP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFGOMgoG4y-cV7rpooYoBll5NH"
-                      "D95QN1h-7S0z7SKzpWs4DqcjMi--NiK.Xi-2Ri--ciKnRi-zNS0nfehMEeh-EeB"
-                      "tt; ALF=02_1732735660; WBPSESS=rJkN6sDiPkCY6OwmtgSdSFD4IfWKWLNfp"
-                      "CV1n8-iaLfszzcEhS7-VUO32sA_3znM54UD4Oi0iNI9wW6EilChg8xca2Db"
-                      "YwwQjitDOBbaZTv7S9TcIdLbm02JAiJRC4wgy1C0_ta1kbnbvdY4_WI4Ow==",
-            "referer": "https://weibo.com/1745981242/ODxdr3Km6"
+            "cookie": "XSRF-TOKEN=BT1IN_ZYnAX5cV3uikTcjNt9; _s_tentry="
+                      "passport.weibo.com; appkey=; Apache=181887480269.689"
+                      "03.1730143572653; SINAGLOBAL=181887480269.68903.1730143572653;"
+                      " ULV=1730143572655:1:1:1:181887480269.68903.1730143572653:; "
+                      "SCF=AscUSQaLBzDj6RSMLIuUweC-pPmALjHIq0_mRuAJlXOh7PQyfJ-FigH0H1R"
+                      "sZctHvkVunQH1sDGno3b7PkhbR04.; SUB=_2A25KG5X8DeRhGeFG7lIW8i7JyT2I"
+                      "HXVpWJc0rDV8PUNbmtAbLWrRkW9NeU1ZCB89nOP4Amc9O1qBcTKACa9ctFtj; SUB"
+                      "P=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFGOMgoG4y-cV7rpooYoBll5NHD95QN"
+                      "1h-7S0z7SKzpWs4DqcjMi--NiK.Xi-2Ri--ciKnRi-zNS0nfehMEeh-EeBtt; ALF="
+                      "02_1732735660; WBPSESS=rJkN6sDiPkCY6OwmtgSdSFD4IfWKWLNfpCV1n8-iaLfszzcE"
+                      "hS7-VUO32sA_3znMEhtTsXkW39gB32kWK2KV9hRc7-ItQlsSPMtNaCsJhCU2"
+                      "l4uizkQLcYpScrSw3lmfmFSUaV2j4lwdSUMe1j9W9A==",
+            "referer": "https://weibo.com/5143998400/ODKBPhecW",
+            "x-xsrf-token": "BT1IN_ZYnAX5cV3uikTcjNt9"
         }
         # 初始化一级评论参数
         self.first_comment = {
             "flow": "0",
             "is_reload": "1",
-            "id": "5094224770893178",
+            "id": "5094739614106194",
             "is_show_bulletin": "2",
             "is_mix": "0",
-            "max_id": "139291837783097",
+            "max_id": "143415038223436",
             "count": "20",
-            "uid": "1745981242",
+            "uid": "5143998400",
             "fetch_level": "0",
             "locale": "zh-CN"
         }
@@ -75,6 +76,7 @@ class GetWeiBoComments(object):
         :param kwargs: 可选参数
         :return: None
         """
+        print(json_data)
         try:
             text_one_raws = jsonpath(json_data, "$..data.*.text_raw")
             one_authors = jsonpath(json_data, "$..data.*.screen_name")
