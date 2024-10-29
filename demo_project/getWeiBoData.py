@@ -1,5 +1,6 @@
 import requests
 from jsonpath import jsonpath
+import sys
 
 # 这个的规则还没有发现，过几天再来
 class GetWeiBoComments(object):
@@ -32,7 +33,7 @@ class GetWeiBoComments(object):
             "flow": "0",
             "is_reload": "1",
             "id": "5094224770893178",
-            "is_show_bulletin": "3",
+            "is_show_bulletin": "2",
             "is_mix": "0",
             "max_id": "139291837783097",
             "count": "20",
@@ -55,19 +56,34 @@ class GetWeiBoComments(object):
         获取数据
         :param args: 可选参数
         :param kwargs: 可选参数
-        :return: response
+        :return: response_json
         """
-        response = requests.get(self.first_url, headers=self.header, params=self.first_comment).json()
-        return response
+        try:
+            response_str = requests.get(self.first_url, headers=self.header, params=self.first_comment)
+            response_json = response_str.json()
+            return response_json
+        except Exception as e:
+            print(f"error: {e}")
+            sys.setrecursionlimit(10)
+            self.get_one_data()
 
-    def parse_data(self, *args, **kwargs):
+    def parse_data(self, json_data, *args, **kwargs):
         """
         解析数据
+        :param json_data: 需要解析的数据
         :param args: 可选参数
         :param kwargs: 可选参数
         :return: None
         """
-        pass
+        try:
+            text_one_raws = jsonpath(json_data, "$..data.*.text_raw")
+            one_authors = jsonpath(json_data, "$..data.*.screen_name")
+            for text_one_raw, one_author in zip(text_one_raws, one_authors):
+                print(text_one_raw, one_author)
+        except Exception as e:
+            print(f"error: {e}")
+            sys.setrecursionlimit(10)
+            self.parse_data(json_data)
 
     def save_data(self, *args, **kwargs):
         """
@@ -85,7 +101,7 @@ class GetWeiBoComments(object):
         :param kwargs: 可选参数
         :return: None
         """
-        print(self.get_one_data())
+        self.parse_data(self.get_one_data())
 
 if __name__ == "__main__":
     getWeiBoComments = GetWeiBoComments()
