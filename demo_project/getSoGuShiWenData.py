@@ -12,6 +12,18 @@ class GetGuShiWenData(object):
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537."
                           "36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
         }
+        self.login_url = "https://www.gushiwen.cn/user/login.aspx?from=http%3a%2f%2fwww.gushiwen.cn%2fuser%2fcollect.aspx"
+        self.login_data = {
+            "__VIEWSTATE": "hZQtCihNGxVSDd0mr15fBBPn5sb1dk4MtYFhXDEN0guLawxA9a901S5Z0HS1kmGoqIjpxxBSZBn4Rdn1 + FV6qGL1UpJg1CvxegRujc75ouxffDCnVN + "
+                           "tna2CHyIThzvJdBrTq4LObqrmmx / KnSaDLDgd / K8 =",
+            "__VIEWSTATEGENERATOR": "C93BE1AE",
+            "from": "http://www.gushiwen.cn/user/ collect.aspx",
+            "email": "3137536916@qq.com",
+            "pwd": "451674Jh",
+            "code": "H84J",
+            "denglu": "登录"
+        }
+        self.sess = requests.session()
 
     def __del__(self):
         """
@@ -25,7 +37,7 @@ class GetGuShiWenData(object):
         用来实现获取我们的验证码请求链接网的处理函数
         :return: f"https://so.gushiwen.cn{response_xml}"
         """
-        response_html = requests.get(self.index_url, headers=self.headers).text
+        response_html = self.sess.get(self.index_url, headers=self.headers).text
         response_xml = etree.HTML(response_html).xpath('//img[@id="imgCode"]/@src')[0]
         return f"https://so.gushiwen.cn{response_xml}"
 
@@ -55,6 +67,16 @@ class GetGuShiWenData(object):
         img = open(path, "rb").read()
         return ChaoJiYing.PostPic(img, 1004)['pic_str']
 
+    def post_user(self, img_code):
+        """
+        登录的实现
+        :param img_code:
+        :return: result
+        """
+        self.login_data["code"] = img_code
+        result = self.sess.post(self.login_url, headers=self.headers, data=self.login_data).text
+        return result
+
     def parse_data(self):
         pass
 
@@ -64,7 +86,8 @@ class GetGuShiWenData(object):
     def run(self):
         img_url = self.get_image_url()
         img_path = self.save_image_data(img_url)
-        self.get_image_data(img_path)
+        img_code = self.get_image_data(img_path)
+        self.post_user(img_code)
 
 if __name__ == "__main__":
     getGuShiWenData = GetGuShiWenData()
