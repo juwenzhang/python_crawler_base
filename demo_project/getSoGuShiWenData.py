@@ -77,13 +77,11 @@ class GetGuShiWenData(object):
         result = self.sess.post(self.login_url, headers=self.headers, data=self.login_data).text
         return result
 
-    def parse_data(self):
-        pass
-
-    def save_dara(self):
-        pass
-
     def run(self):
+        """
+        实实现运行整个爬虫程序的执行函数
+        :return:
+        """
         img_url = self.get_image_url()
         img_path = self.save_image_data(img_url)
         img_code = self.get_image_data(img_path)
