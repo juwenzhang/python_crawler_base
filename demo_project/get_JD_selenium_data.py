@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By  # 选择器
 from selenium.webdriver.common.keys import Keys  # 按键
 from selenium.webdriver.support import expected_conditions as ec # 设置时间等待的东西
 from selenium.webdriver.support.wait import WebDriverWait  # 控制时间等待
+from selenium.webdriver.support.expected_conditions import alert_is_present
 import time
 
 class GetJDSelenium(object):
@@ -52,12 +53,17 @@ class GetJDSelenium(object):
             login_btn.click()
             # =================================================
             time.sleep(10)
-            use_weixin_login = self.browser.find_element(By.CSS_SELECTOR, '#kbCoagent > ul > li:nth-child(3) > a > span')
+            use_weixin_login = self.browser.find_element(By.XPATH, '//*[@id="kbCoagent"]/ul/li[2]/a/span')
             use_weixin_login.click()
             # =================================================
             time.sleep(10)
             weixin_btn = self.browser.find_element(By.XPATH, '//*[@id="tpl_for_page"]/span[1]/div[1]/div[5]/div/button')
             weixin_btn.click()
+            # 解决微信登录后的弹窗问题==============================
+            WebDriverWait(self.browser, 5).until(alert_is_present())  # 等待弹出窗口出现
+            alert = self.browser.switch_to.alert
+            alert.accept()  # 确认
+            time.sleep(2)
         except Exception as e:
             print(f"error: {e}")
 
@@ -69,8 +75,8 @@ class GetJDSelenium(object):
         """
         self.selenium_search()
         time.sleep(10)
-        self.selenium_login()
-        time.sleep(10)
+        # self.selenium_login()
+        # time.sleep(10)
         self.browser.close()
 
 if __name__ == "__main__":

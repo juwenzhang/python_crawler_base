@@ -329,9 +329,9 @@ print(cookies)
 browser.add_cookie({'name': 'zhangsan', 'domain': 'abcd123', 'value': 'hellozhang'})
 
 print(browser.get_cookies())  # 查看设置成功的cookies信息
-
-清除cookies
-
+```
+### 清除cookies
+```python
 browser.delete_all_cookies()  # 删除所有cookie
 
 print(browser.get_cookies())
