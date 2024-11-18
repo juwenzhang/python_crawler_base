@@ -31,3 +31,4 @@ scripy 框架的实现原理
 > > middlewares.py 就是实现的是我们的中间件的书写
 > > pipelines.py 就是我们需要进行保存的数据书写的地方
 > > setting.py 就是我们的配置文件
+> ` scrapy crawl baidu_scrapy` 实现的是启动项目
