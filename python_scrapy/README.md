@@ -26,3 +26,8 @@ scripy 框架的实现原理
 > > 实现创建了后，我们的爬虫就具有了几个比较重要的文件
 > 
 > > 1.items.py  |  2.middlewares.py  | 3.pipelines.py  | 4.setting.py
+> 
+> > items.py 就是实现的是我们的建模
+> > middlewares.py 就是实现的是我们的中间件的书写
+> > pipelines.py 就是我们需要进行保存的数据书写的地方
+> > setting.py 就是我们的配置文件
