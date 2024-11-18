@@ -14,6 +14,8 @@ scripy 框架的实现原理
 
 ![img_4.png](img_4.png)
 
+![img_5](img_5.png)
+
 `pip install scrapy`
 `pip install pypiwin32`
 
@@ -32,3 +34,6 @@ scripy 框架的实现原理
 > > pipelines.py 就是我们需要进行保存的数据书写的地方
 > > setting.py 就是我们的配置文件
 > ` scrapy crawl baidu_scrapy` 实现的是启动项目
+> 
+
+[推荐阅读](https://blog.csdn.net/qq_45981086/article/details/128859442)
